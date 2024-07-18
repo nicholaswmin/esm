@@ -1,3 +1,3 @@
 # Todos
 
-- [ ] Implement `<project>`
+- [ ] Implement `{{project}}`

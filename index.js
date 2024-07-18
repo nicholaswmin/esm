@@ -1,3 +1,3 @@
-import greet from './src/<project>/index.js'
+import greet from './src/util/index.js'
 
 export default greet
