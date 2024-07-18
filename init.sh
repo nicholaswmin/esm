@@ -10,7 +10,7 @@ sed -i '' "s/<author>/${author//@/}/g" package.json
 sed -i '' "s/<author>/${author//@/}/g" LICENSE
 sed -i '' "s/<year>/$(date +%Y)/g" LICENSE
 
-npm i -D eslint
+npm i -D @eslint/js
 
 #git add --all
 #git commit -am"feat: init project name"
