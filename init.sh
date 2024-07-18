@@ -1,7 +1,7 @@
 #!/bin/bash
 
-read -p "Enter a description:" description
-read -p "Enter your username:" author
+read -p "Enter a description: " description
+read -p "Enter your username: " author
 
 sed -i '' "s/<description>/$description/g" package.json
 sed -i '' "s/<author>/${author//@/}/g" package.json
