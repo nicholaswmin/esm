@@ -1,15 +1,13 @@
 [//]: # (overview-start)
-ES module template, zero dependencies, zero config, all native.
+ES module template with zero dependencies & zero config.
 
-Comes with unit tests, CodeQL & a tiny `git` hook to ensure commit messages
-follow [conventional commits][cc].\
-[ESLint][lint] is optional.
+Includes unit tests, CodeQL & a tiny `git` hook to ensure commit messages 
+follow [conventional commits][cc].
 
 - click: `Use this as a template`
 - run: `npm run setup`
 
-> runs a bash script that sets *everything* up, replaces all `{{token}}`
-then deletes itself
+> runs a bash script that sets everything up then deletes itself
 ---
 [//]: # (overview-end)
 
