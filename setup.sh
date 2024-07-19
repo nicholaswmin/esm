@@ -8,29 +8,40 @@ set -e
 
 printf "\x1B[34mStarting up...\x1B[0m\n"
 
-# Gather user inputs
+# Default user inputs
 
 # project name is current working directory
 project=${PWD##*/}
+nodev=$(npm view node version | cut -d '.' -f1)
+author=$(gh api user --jq .login)
 
 # gather required user inputs
-# description must have at least 5 characters
-while [[ -z $description ]] || (( ${#description} < 5 )) ; do
+# description must have at least 3 characters
+while [[ -z $description ]] || (( ${#description} < 3 )) ; do
     printf "\nEnter package description: "
     read -r description
 done
 
 # node version must be a positive integer
+
+# Gather user inputs
+
+read -e -p "Enter minimum NodeJS version [latest: $nodev]: " -i $nodev nodev
 while ! [[ "$nodev" =~ ^[0-9]+$ ]]; do
-    printf "\nEnter minimum NodeJS version (major only, i.e: 22): "
+    printf "\nEnter minimum NodeJS version: "
     read -r nodev
 done
 
+echo $nodev
+
 # author must be a valid github username (no "@", min length = 3 etc..)
+read -e -p "Enter your username: " -i $author author
 while ! [[ "$author" =~ ^[[:alpha:][:digit:]_-]{3,15}$ ]]; do
-    printf "\nEnter your Github username: "
+    printf "\nEnter your username: "
     read -r author
 done
+
+echo $author
 
 until [[ $eslint =~ ^[YyNn]$ ]]; do
     printf "\nNeed ESLint (with NodeJS globals) ? (y/n) "
