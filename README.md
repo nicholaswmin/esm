@@ -8,7 +8,7 @@ follow [conventional commits][cc].\
 - click: `Use this as a template`
 - run: `npm run setup`
 
-> sets *everything* up, replaces all `{{token}}` then deletes all setup code
+> runs a bash script that sets *everything* up, replaces all `{{token}}`, then deletes itself
 ---
 [//]: # (overview-end)
 
