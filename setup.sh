@@ -22,7 +22,7 @@ set -e
 #
 # Example:
 #
-# deleteKeyFromJSONFile "version" package.json
+# deleteJSONKey "version" package.json
 #
 # Removes the "version" property of file "package.json""
 #
@@ -35,7 +35,7 @@ set -e
 # - 0 if key was deleted
 # - 1 otherwise
 #######################################
-deleteKeyFromJSONFile () {
+deleteJSONKey () {
     key=$1
     file=$2
 
@@ -71,7 +71,7 @@ deleteKeyFromJSONFile () {
     # remove dangling comma of previous line:
     if ! [[ "${line: -1}" =~ ^[,]$ ]]; then
         if  [ -n "$prev_line" ] && [[ "${prev_line: -1}" =~ ^[,]$ ]]; then
-            sed  -i "" $prev_line_num's/,//g' $file
+            sed  -i "" $prev_line_num's/,//g' "$file"
         fi
     fi
 
@@ -166,7 +166,6 @@ npm i -D @eslint/js globals
 
 # add ESlint to `npm run checks`
 sed -i '' "s/{{eslint-cmd}}/npx eslint \&\& /g" package.json
-printf "\n\x1B[34madded ESlint & NodeJS globals\x1B[0m\n"
 
 if [[ $eslint =~ ^[Yy]$ ]]
 then
@@ -255,24 +254,41 @@ sed -i '' "s,https://img.shields.io/badge/CodeQL-passing-green,$codeql_badge,g" 
 # Remove template-setup boilerplate
 
 # Remove the `setup` npm script
-deleteKeyFromJSONFile "setup" package.json
+deleteJSONKey "setup" package.json
 
 # Remove the top overview section from README
 overview_start=$( grep -n "overview-start" README.md | cut -f1 -d:)
 overview_end=$( grep -n "overview-end" README.md | cut -f1 -d:)
 sed -i "" "${overview_start},$((overview_end+1))d" README.md
 
-printf "\n\x1B[34m- setup Github Actions and badges\x1B[0m\n"
-printf "\n\x1B[34m- added Conventional Commit git hook\x1B[0m\n"
-printf "\n\x1B[34m- filled-in project details\x1B[0m\n"
-printf "\n\x1B[34m- fixed-up package.json\x1B[0m\n"
-printf "\n\x1B[32m- Cleaning up, commiting and pushing 🦄 ...\x1B[0m\n"
+if [[ $eslint =~ ^[Yy]$ ]]; then
+    printf "\n\x1B[34mESlint + Node.js config\x1B[0m\n"
+fi
+printf "\n\x1B[34mOK: Github Actions and badges\x1B[0m"
+printf "\n\x1B[34mOK: Conventional Commit commit-msg git hook\x1B[0m"
+
+printf "\n\x1B[34mOK: project details\x1B[0m"
+printf "\n\x1B[34mOK: package.json\x1B[0m"
+printf "\n\n\x1B[34mcleaning setup code, then pushing ...\x1B[0m\n\n"
+
+sucessMessage() {
+    printf "\n\x1B[33mNote: The 1st CI runs should start on Github Actions..\x1B[0m"
+    printf "\n\x1B[33m- Visit your README in ~5 minutes & hard-refresh.\x1B[0m"
+    printf "\n\x1B[33m- Your CI badges should be marked as \"passing\".\x1B[0m\n"
+    printf "\n\x1B[32mSetup was successful. Bye bye.. 👋\x1B[0m\n"
+}
+
+nohup timeout 10 >/dev/null & sleep 2 && sucessMessage
 
 # schedule commit & push in 2 seconds
 #
-# note: must be done in an async daemon so we
-# can delete this file and have it pushed in the commit
-nohup >/dev/null & sleep 2 && git add --all && git commit -am"feat: init project" && git push origin main
+# note: launched async in a 'nohup' daemon so we
+# can delete this file in the next line and
+# have it pushed in the commit
+nohup >/dev/null & sleep 2 && git add --all && \
+git commit -am"feat: init project" && \
+git push origin main &&
+sucessMessage
 
 # delete this file
 # note: runs *before* the above command, so it gets commited

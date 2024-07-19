@@ -2,8 +2,7 @@
 
 > always do *less*
 
-- avoid verbosity, dependencies, build-systems, steps, processes
-- this bunch of featherweight guidelines are more than enough.
+- avoid verbosity, dependencies, processes, rules, slow steps
 
 ## Testing
 
@@ -33,7 +32,9 @@ follows [conventional commits][conv-comm]
 npm test
 npm run checks
 ```
-*must* pass locally
+*must* pass at some point before merging to `main`.
+
+That's all.
 
 [semver]: https://semver.org/
 [conv-comm]: https://www.conventionalcommits.org/en/v1.0.0/#summary
