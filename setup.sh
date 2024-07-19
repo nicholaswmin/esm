@@ -6,7 +6,7 @@ cleanup() {
   git reset --hard
   git clean --f
 }
-trap cleanup 0
+trap cleanup ERR
 
 # Exit script if a statement returns
 # a non-true return value.
