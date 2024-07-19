@@ -2,7 +2,7 @@
 
 # reset in case of error
 cleanup() {
-    printf "\n\x1B[31maAn error occured. Resetting...\x1B[0m\n"
+    printf "\n\x1B[31Last command failed. Resetting and exiting ...\x1B[0m\n"
   git reset --hard
   git clean --f
 }
