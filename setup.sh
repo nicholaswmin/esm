@@ -14,30 +14,34 @@ printf "\x1B[34mStarting up...\x1B[0m\n"
 project=${PWD##*/}
 
 # gather required user inputs
-while [[ -z $description ]]; do
+# description must have at least 5 characters
+while [[ -z $description ]] || (( ${#description} < 5 )) ; do
     printf "\nEnter package description: "
     read -r description
 done
 
+# node version must be a positive integer
 while ! [[ "$nodev" =~ ^[0-9]+$ ]]; do
-    printf "\nEnter minimum major supported NodeJS version: "
+    printf "\nEnter minimum NodeJS version (major only, i.e: 22): "
     read -r nodev
 done
 
-while [[ -z $author ]]; do
+# author must be a valid github username (no "@", min length = 3 etc..)
+while ! [[ "$author" =~ ^[[:alpha:][:digit:]_-]{3,15}$ ]]; do
     printf "\nEnter your Github username: "
     read -r author
 done
 
-until [[ $eslint == *y*  ]] || [[ $eslint == *n* ]];  do
-    printf "\nNeed ESLint ? (y/n) "
+until [[ $eslint =~ ^[YyNn]$ ]]; do
+    printf "\nNeed ESLint (with NodeJS globals) ? (y/n) "
     read -r eslint
 done
+
+# trim trailing and leading whitespace
 
 nodev="${nodev#"${nodev%%[![:space:]]*}"}"
 nodev="${nodev%"${nodev##*[![:space:]]}"}"
 
-author="$(tr [A-Z] [a-z] <<< "${author//@}")"
 author="${author#"${author%%[![:space:]]*}"}"
 author="${author%"${author##*[![:space:]]}"}"
 
