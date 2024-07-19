@@ -26,22 +26,18 @@ done
 
 # Gather user inputs
 
-read -e -p "Enter minimum NodeJS version [latest: $nodev]: " -i $nodev nodev
+read -r -e -p "Enter min. NodeJS version [latest: $nodev]: " -i "$nodev" nodev
 while ! [[ "$nodev" =~ ^[0-9]+$ ]]; do
     printf "\nEnter minimum NodeJS version: "
     read -r nodev
 done
 
-echo $nodev
-
 # author must be a valid github username (no "@", min length = 3 etc..)
-read -e -p "Enter your username: " -i $author author
+read -r -e -p "Enter your username: " -i "$author" author
 while ! [[ "$author" =~ ^[[:alpha:][:digit:]_-]{3,15}$ ]]; do
     printf "\nEnter your username: "
     read -r author
 done
-
-echo $author
 
 until [[ $eslint =~ ^[YyNn]$ ]]; do
     printf "\nNeed ESLint (with NodeJS globals) ? (y/n) "
