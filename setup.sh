@@ -44,6 +44,11 @@ author="${author%"${author##*[![:space:]]}"}"
 description="${description#"${description%%[![:space:]]*}"}"
 description="${description%"${description##*[![:space:]]}"}"
 
+# Replace node version
+# note: do this early so we can npm install
+
+sed -i '' "s/{{nodev}}/$(echo "$nodev" | grep -o -E '[0-9]+')/g" package.json
+
 # ESLint
 
 if [[ $eslint =~ ^[Yy]$ ]]
@@ -111,7 +116,6 @@ chmod ug+x .git/hooks/commit-msg
 sed -i '' "s/{{description}}/$description/g" package.json README.md
 sed -i '' "s/{{author}}/${author//@/}/g" package.json README.md LICENSE
 sed -i '' "s/{{year}}/$(date +%Y)/g" LICENSE
-sed -i '' "s/{{nodev}}/$(echo "$nodev" | grep -o -E '[0-9]+')/g" package.json
 
 # recursively replace project name
 LC_CTYPE=C && LANG=C && find ./ \( -iname \*.js -o -iname \*.md -o -iname \*.json \) -print0 | xargs -0 sed -i '' "s/{{project}}/${project}/g"
