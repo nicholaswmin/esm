@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# reset in case of error
+cleanup() {
+    printf "\n\x1B[31maAn error occured. Resetting...\x1B[0m\n"
+  git reset --hard
+  git clean --f
+}
+trap cleanup 0
+
 # Exit script if a statement returns
 # a non-true return value.
 set -e
