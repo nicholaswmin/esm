@@ -1,8 +1,8 @@
 {
-  "name": "@nicholaswmin/esm-zero",
+  "name": "@{{author}}/{{project}}",
   "type": "module",
   "version": "0.1.0",
-  "description": "low fat ESM teamplate",
+  "description": "{{description}}",
   "main": "index.js",
   "scripts": {
     "test": "NODE_ENV=test node --test test/index.spec.js",
@@ -11,18 +11,18 @@
     "checks": "{{eslint-cmd}}npm audit"
   },
   "engines": {
-    "node": ">=20"
+    "node": ">={{nodev}}"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nicholaswmin/esm-zero.git"
+    "url": "git+https://github.com/{{author}}/{{project}}.git"
   },
   "keywords": [],
-  "author": "@nicholaswmin",
+  "author": "@{{author}}",
   "license": "MIT-0",
   "bugs": {
-    "url": "https://github.com/nicholaswmin/esm-zero/issues"
+    "url": "https://github.com/{{author}}/{{project}}/issues"
   },
-  "homepage": "https://github.com/nicholaswmin/esm-zero#readme",
+  "homepage": "https://github.com/{{author}}/{{project}}#readme",
   "devDependencies": {}
 }
